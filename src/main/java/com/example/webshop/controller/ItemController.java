@@ -35,12 +35,15 @@ public class ItemController {
 
     // GET
     // http://localhost:8080/items/1
-    @RequestMapping("/{id}")
-    public Item getItemById(@PathVariable Long id)
+    @RequestMapping("/{name}")
+    public Item getItemByName(@PathVariable String name)
             throws CustomizedNotFoundException {
-        return itemRepository.findById(id).orElseThrow(() ->
-                new CustomizedNotFoundException(
-                        "Item with id: " + id + " could not be found"));
+        Item itemByName = itemRepository.findItemByName(name);
+        if(itemByName == null){
+                   throw new CustomizedNotFoundException(
+                            "The item: " + name + " could not be found");
+        }
+        return itemByName;
     }
 
     // POST
