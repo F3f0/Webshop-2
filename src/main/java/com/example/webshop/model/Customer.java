@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Data
+@Data       // Lombok (innehåller @NoArgsConstructor)
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder    // Build/create customer
 public class Customer {
 
     @Id
