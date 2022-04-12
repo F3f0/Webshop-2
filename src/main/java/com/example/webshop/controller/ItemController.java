@@ -1,5 +1,6 @@
 package com.example.webshop.controller;
 
+import com.example.webshop.error.CustomizedNotFoundException;
 import com.example.webshop.model.BuyOrder;
 import com.example.webshop.model.Customer;
 import com.example.webshop.model.Item;
@@ -35,9 +36,10 @@ public class ItemController {
     // GET
     // http://localhost:8080/items/1
     @RequestMapping("/{id}")
-    public Item getItemById(@PathVariable Long id) {
+    public Item getItemById(@PathVariable Long id)
+            throws CustomizedNotFoundException {
         return itemRepository.findById(id).orElseThrow(() ->
-                new RuntimeException(
+                new CustomizedNotFoundException(
                         "Item with id: " + id + " could not be found"));
     }
 
@@ -52,12 +54,14 @@ public class ItemController {
     //POST
     // Postman
     @PostMapping("/buy")
-    public BuyOrder getOrdersByCustomerId (@RequestParam Long customerId, @RequestParam Long itemId){
+    public BuyOrder getOrdersByCustomerId(@RequestParam Long customerId,
+                                          @RequestParam Long itemId)
+            throws CustomizedNotFoundException {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
-                new RuntimeException(
+                new CustomizedNotFoundException(
                         "Customer with id: " + customerId + " could not be found"));
         Item item = itemRepository.findById(itemId).orElseThrow(() ->
-                new RuntimeException(
+                new CustomizedNotFoundException(
                         "Item with id: " + itemId + " could not be found"));
         BuyOrder buyOrder = BuyOrder.builder().customer(customer).items(List.of(item)).build();
         buyOrderRepository.save(buyOrder);
