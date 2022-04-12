@@ -30,6 +30,7 @@ public class BuyOrder {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Customer customer;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name="buy_order_item_map",
