@@ -25,7 +25,9 @@ public class CustomerController {
     // http://localhost:8080/customers/1
     @RequestMapping("/{id}")
     public Customer getCustomerById(@PathVariable Long id) {
-        return customerRepository.findById(id).get();
+        return customerRepository.findById(id).orElseThrow(() ->
+                new RuntimeException(
+                        "Customer with id: " + id + " could not be found"));
     }
 
     // POST
