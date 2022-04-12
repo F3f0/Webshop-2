@@ -26,7 +26,6 @@ public class BuyOrder {
             generator = "buyOrder_sequence"
     )
     private Long id;
-    private String orderNumber;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn

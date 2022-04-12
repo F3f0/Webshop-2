@@ -12,11 +12,15 @@ public class ItemController {
     @Autowired
     private ItemRepository itemsRepository;
 
+    // GET
+    // http://localhost:8080/items
     @RequestMapping
     public Iterable<Item> getAllItems() {
         return itemsRepository.findAll();
     }
 
+    // GET
+    // http://localhost:8080/items/1
     @RequestMapping("/{id}")
     public Item getItemById(@PathVariable Long id) {
         return itemsRepository.findById(id).orElseThrow(() ->
@@ -24,6 +28,8 @@ public class ItemController {
                         "Item with id: " + id + " could not be found"));
     }
 
+    // POST
+    // Postman
     @PostMapping
     public String addNewItem(@RequestBody Item item) {
         itemsRepository.save(item);
