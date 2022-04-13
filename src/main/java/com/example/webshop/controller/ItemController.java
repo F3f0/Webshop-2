@@ -4,10 +4,13 @@ import com.example.webshop.error.CustomizedNotFoundException;
 import com.example.webshop.model.BuyOrder;
 import com.example.webshop.model.Customer;
 import com.example.webshop.model.Item;
+import com.example.webshop.dto.CustomerItemResponseDTO;
 import com.example.webshop.repository.BuyOrderRepository;
 import com.example.webshop.repository.CustomerRepository;
 import com.example.webshop.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,7 +59,7 @@ public class ItemController {
 
     //POST
     // Postman
-    @PostMapping("/buy")
+    /*@PostMapping("/buy")
     public BuyOrder getOrdersByCustomerId(@RequestParam Long customerId,
                                           @RequestParam Long itemId)
             throws CustomizedNotFoundException {
@@ -69,6 +72,22 @@ public class ItemController {
         BuyOrder buyOrder = BuyOrder.builder().customer(customer).items(List.of(item)).build();
         buyOrderRepository.save(buyOrder);
         return buyOrder;
+    }*/
+
+    //POST
+    // Postman
+    @PostMapping("/buy")
+    public ResponseEntity<?> getOrdersByCustomerIdAndItemId(@RequestBody CustomerItemResponseDTO customerItemResponseDTO)
+            throws CustomizedNotFoundException {
+        Customer customer = customerRepository.findById(customerItemResponseDTO.getCustomerId()).orElseThrow(() ->
+                new CustomizedNotFoundException(
+                        "Customer with id: " + customerItemResponseDTO.getCustomerId() + " could not be found"));
+        Item item = itemRepository.findById(customerItemResponseDTO.getItemId()).orElseThrow(() ->
+                new CustomizedNotFoundException(
+                        "Item with id: " + customerItemResponseDTO.getItemId() + " could not be found"));
+        BuyOrder buyOrder = BuyOrder.builder().customer(customer).items(List.of(item)).build();
+        buyOrderRepository.save(buyOrder);
+        return new ResponseEntity<>(buyOrder, HttpStatus.CREATED);
     }
 
 
