@@ -47,6 +47,7 @@ class BuyOrderControllerTest {
 
         when(mockRepository.findById(1L)).thenReturn(Optional.of(buyOrder1));
         when(mockRepository.findAll()).thenReturn(List.of(buyOrder1, buyOrder2, buyOrder3));
+        when(mockRepository.findAllByCustomerId(2L)).thenReturn(List.of(buyOrder2));
     }
 
 
@@ -115,6 +116,27 @@ class BuyOrderControllerTest {
     }
 
     @Test
-    void getOrdersByCustomerId() {
+    void getOrdersByCustomerIdTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/orders/2")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        [
+                            {
+                                "id": 2,
+                                "customer": {
+                                    "id": 2,
+                                    "name": "David Beckham",
+                                    "address": "Manchester"
+                                },
+                                "items": [
+                                    {
+                                        "id": 3,
+                                        "name": "iPhone"
+                                    }
+                                ]
+                            }
+                        ]"""));
     }
+
 }
