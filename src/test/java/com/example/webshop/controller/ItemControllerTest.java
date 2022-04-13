@@ -50,6 +50,7 @@ class ItemControllerTest {
         when(mockRepository.findById(1L)).thenReturn(Optional.of(item1));
         when(mockRepository.findAll()).thenReturn(List.of(item1, item2, item3));
         //when(mockRepository.findAllByCustomerId(2L)).thenReturn(List.of(buyOrder2));
+        when(mockRepository.findItemByName("iPhone")).thenReturn(item3);
     }
 
     @Test
@@ -76,7 +77,16 @@ class ItemControllerTest {
     }
 
     @Test
-    void getItemByName() {
+    void getItemByName() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/items/iPhone")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {
+                            "id": 3,
+                            "name": "iPhone"
+                        }
+                        """));
     }
 
     @Test
