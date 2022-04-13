@@ -65,5 +65,18 @@ class CustomerControllerTest {
 
                         ]"""));
     }
+    @Test
+    void getCustomerByIdTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/customers/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                       {
+                            "id" : 1,
+                           "name" : "Lennart Skoglund",
+                           "address" : "Stockholm"
+                       }
+                        """));
+    }
 
 }
