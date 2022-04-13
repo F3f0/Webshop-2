@@ -65,6 +65,7 @@ class CustomerControllerTest {
 
                         ]"""));
     }
+
     @Test
     void getCustomerByIdTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/customers/1")
@@ -77,6 +78,19 @@ class CustomerControllerTest {
                            "address" : "Stockholm"
                        }
                         """));
+    }
+
+    @Test
+    void addTest() throws Exception {
+        mockMvc.perform(post("/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                        {
+                            "name" : "Jamal Robenson",
+                            "address" : "New York"
+                        }"""))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("Saved")));
     }
 
 }
