@@ -77,7 +77,7 @@ public class ItemController {
     //POST
     // Postman
     @PostMapping("/buy")
-    public ResponseEntity<?> getOrdersByCustomerIdAndItemId(@RequestBody CustomerItemResponseDTO customerItemResponseDTO)
+    public BuyOrder getOrdersByCustomerIdAndItemId(@RequestBody CustomerItemResponseDTO customerItemResponseDTO)
             throws CustomizedNotFoundException {
         Customer customer = customerRepository.findById(customerItemResponseDTO.getCustomerId()).orElseThrow(() ->
                 new CustomizedNotFoundException(
@@ -87,7 +87,7 @@ public class ItemController {
                         "Item with id: " + customerItemResponseDTO.getItemId() + " could not be found"));
         BuyOrder buyOrder = BuyOrder.builder().customer(customer).items(List.of(item)).build();
         buyOrderRepository.save(buyOrder);
-        return new ResponseEntity<>(buyOrder, HttpStatus.CREATED);
+        return buyOrder;
     }
 
 

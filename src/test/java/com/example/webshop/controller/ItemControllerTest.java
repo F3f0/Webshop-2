@@ -117,7 +117,7 @@ class ItemControllerTest {
                                        "itemId" : 3
                                  }
                                  """))
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 /*.andExpect(content().json("""
                         {
                              "id": 1,
