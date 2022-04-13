@@ -43,4 +43,27 @@ class CustomerControllerTest {
         when(mockRepository.findAll()).thenReturn(List.of(customer1, customer2, customer3));
     }
 
+    @Test
+    void getAllCustomersTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/customers")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        [
+                            {
+                                "name" : "Lennart Skoglund",
+                                "address" : "Stockholm"
+                            },
+                            {
+                                "name" : "David Beckham",
+                                "address" : "Manchester"
+                            },
+                            {
+                                "name" : "Jorge Resurrección Merodio",
+                                "address" : "Madrid"
+                            }
+
+                        ]"""));
+    }
+
 }
