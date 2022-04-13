@@ -18,8 +18,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -77,7 +79,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void getItemByName() throws Exception {
+    void getItemByNameTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/items/iPhone")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -90,7 +92,15 @@ class ItemControllerTest {
     }
 
     @Test
-    void addNewItem() {
+    void addNewItemTest() throws Exception {
+        mockMvc.perform(post("/items")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                        {
+                            "name" : "Airpods"
+                        }"""))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("Saved")));
     }
 
     @Test
