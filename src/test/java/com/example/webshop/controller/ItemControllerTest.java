@@ -28,6 +28,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -67,7 +68,6 @@ class ItemControllerTest {
 
         when(mockBuyOrderRepository.findById(1L)).thenReturn(Optional.of(buyOrder));
         when(mockCustomerRepository.findById(1L)).thenReturn(Optional.of(customer));
-        mockBuyOrderRepository.save(buyOrder);
     }
 
     @Test
@@ -158,7 +158,7 @@ class ItemControllerTest {
 
     @Test
     void getOrdersByItemIdNotFoundTest() throws Exception {
-        MvcResult mvcResult =mockMvc.perform(post("/items/buy")
+        MvcResult mvcResult = mockMvc.perform(post("/items/buy")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
