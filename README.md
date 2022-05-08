@@ -1,5 +1,7 @@
 ### Webshop  ###
 
+Group assignment Back-end 1 course.
+
 ### Inlämningsuppgift – JAVA21 – G/VG ###
 
 Ni ska skapa en webshop som man kan använda genom ett REST API. Ni ska alltså inte skapa en frontend eller annan klient som använder denna tjänst. 
